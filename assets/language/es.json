@@ -1,0 +1,78 @@
+{
+    "copyright":"Todos los derechos reservados Ssusy S.A de CV",
+    "welcome_scan_code":"Escanea el código que fue mandado a tu correo para poder continuar. ",
+    "welcome_resend_email":"Reenviar correo electrónico",
+    "field_school_id":"Clave de la escuela",
+    "field_hint_school_id":"Introduzca la Clave manualmente",
+    "title_scan_code":"Escanear código",
+    "field_email":"Correo electrónico",
+    "field_hint_email":"example@gmail.com",
+    "field_password":"Contraseña",
+    "field_new_password":"Nueva contraseña",
+    "field_confirm_password":"Confirmar contraseña",
+    "message_required_password":"La contraseña es requerida.",
+    "message_validate_password":"La contraseña debe tener un mínimo de 6 caracteres.",
+    "message_validate_password2":"Las contraseñas no coinciden.",
+  
+    "question_recovery_password":"¿Olvidaste tu contraseña?",
+    "recovery":"Recuperar",
+    "message_email_required_recovery":"Ingresa un correo para poder restaurar la contraseña",
+    
+    "label_input_code":"Ingresa el codigo que te llego a tu correo",
+    
+  
+    "bottom_profile":"Perfil",
+    "bottom_home":"Inicio",
+    "bottom_pays":"Pagos",
+  
+  
+    "home_welcome":"Bienvenido",
+    "home_hi":"Hola",
+  
+    "students":"Alumnos",
+    "students_description":"Elige el alumno del que deseas ver mas información",
+    "student_detail_title":"Alumno",
+    "student_detail_ratings":"Calificaciones",
+    "label_student_select_group":"Ciclo escolar",
+  
+    "message_error_data":"No se pudo obtener datos",
+    "message_payments_not":"Paga las mensualidades para poder ver y descargar calificaciones",
+  
+  
+    "historial_pays":"Historial de pagos",
+  
+  
+    "btn_login":"Iniciar sesión",
+    "btn_next":"Continuar",
+    "btn_accept":"Aceptar",
+    "btn_reintent":"Reintentar",
+    "btn_save":"Guardar",
+    "btn_pay":"Pagar",
+    "btn_add":"Agregar",
+  
+  
+    "message_change_password":"Cambia tu contraseña",
+  
+    "message_success_change_password":"Contraseña cambiada correctamante.",
+  
+  
+  
+    "message_select_min_paymet":"Selecciona mínimo un pago para poder continuar.",
+    "title_page_payment":"Confirmación de pago",
+    "title_section_method_payment": "Método de pago",
+    "message_cards_empty": "No tienes ningún método de pago, agrega uno",
+  
+    "title_detail_concepts":"Conceptos de pago",
+  
+  
+    "title_total_for_pay":"Total a pagar",
+    "label_total":"Total",
+    "label_interess":"Intereses",
+    "label_commisions":"Comisiones",
+    "label_discounts":"Descuentos",
+  
+    "message_select_min_method_pay":"Selecciona mínimo un método depago poder continuar.",
+    "message_error_pay_service": "No se pudo hacer el cargo,vuelva intentar mas tarde",
+    "message_success_payments":"El pago de tus mensualidades ah salido con exito, sigue disfrutando de la app.",
+    "message_success_payments_with_errors": "Algunas mensualidades no se pudieron cobrar, puedes reintentar mas tarde"
+  }
