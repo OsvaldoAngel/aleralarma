@@ -1,4 +1,5 @@
 import 'package:aleralarma/common/settings/routes_names.dart';
+import 'package:aleralarma/features/alarm/presentation/page/alarm_page.dart';
 import 'package:aleralarma/features/auth/presentation/page/login/login_page.dart';
 import 'package:aleralarma/features/auth/presentation/page/splashScreen/splashScreen.dart';
 import 'package:aleralarma/features/chat/presentation/page/chat_page.dart';
@@ -11,6 +12,14 @@ class RouterApp {
       case RoutesNames.homePage:
         return MaterialPageRoute(
           builder: (_) => HomePage(),
+        );
+         case RoutesNames.chat:
+        return MaterialPageRoute(
+          builder: (_) => ChatPage(),
+        );
+         case RoutesNames.alarm:
+        return MaterialPageRoute(
+          builder: (_) => AlarmPage(),
         );
       case RoutesNames.splashScreen:
         return MaterialPageRoute(

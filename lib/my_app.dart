@@ -12,12 +12,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:aleralarma/common/settings/key_global.dart';
 
-
-// Modifica el provider para usar la clave global
-
-// Modifica el provider para usar la clave global
 final navigatorKeyProvider = Provider<GlobalKey<NavigatorState>>((ref) {
-  return navigatorKey;  // Usa la clave global en lugar de crear una nueva
+  return navigatorKey;  
 });
 class MyApp extends StatelessWidget {
   
@@ -44,8 +40,7 @@ class MyApp extends StatelessWidget {
           locale: const Locale('es'),
           navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
-          theme: AppThemeCustom()
-              .getTheme(mode: ThemeMode.light, context: context),
+theme: AppTheme.themeData,
           onGenerateRoute: RouterApp.generateRoute),
     );
   }

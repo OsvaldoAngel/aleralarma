@@ -15,7 +15,7 @@ class SplashPage extends ConsumerWidget {
         data: (_) {
           Navigator.pushNamedAndRemoveUntil(
             context,
-            RoutesNames.homePage,
+            RoutesNames.alarm,
             (route) => false,
           );
         },

@@ -1,73 +1,108 @@
 import 'dart:convert';
-
-import 'package:aleralarma/common/constants/constants.dart';
-import 'package:aleralarma/common/error/api_errors.dart';
 import 'package:aleralarma/features/auth/data/models/auth_model.dart';
 import 'package:aleralarma/features/auth/domain/entities/auth_entitie.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
+import 'package:aleralarma/common/constants/constants.dart';
 
 class AuthLocalDataSource {
-    String defaultApiServer = AppConstants.serverBase;
-Future<AuthModel> login(AuthEntitie authEntitie) async {
+  Future<AuthModel> login(AuthEntitie authEntitie) async {
     try {
-      var response = await http.post(
-        Uri.parse('$defaultApiServer/api/v1/admin/global/login'),
+      final url = Uri.parse('${AppConstants.serverBase}/api/v1/admin/global/login');
+      
+      // Imprimir información de depuración
+      print("URL de login: $url");
+      print("Enviando email: ${authEntitie.correo}");
+      
+      final payload = {
+        'correo': authEntitie.correo,
+        'contrasena': authEntitie.contrasena,
+      };
+      
+      print("Payload: ${jsonEncode(payload)}");
+      
+      final response = await http.post(
+        url,
         headers: {
           'Content-Type': 'application/json',
+          'x-api-key': AppConstants.apikey,
         },
-        body: jsonEncode(AuthModel.fromEntity(authEntitie).toJson()),
+        body: jsonEncode(payload),
       );
 
+      // Imprimir respuesta para depuración
+      print("Código de respuesta: ${response.statusCode}");
+      print("Cuerpo de respuesta: ${response.body}");
+
       if (response.statusCode == 200) {
-        final dataUTF8 = utf8.decode(response.bodyBytes);
-        final responseDecode = jsonDecode(dataUTF8);
-        
-        // Create AuthModel with initial login token
-        final authModel = AuthModel(token: responseDecode['token']);
-        
-        // Get refreshed token
-        return await refreshToken(token: authModel.token ?? '');
+        final responseData = jsonDecode(response.body);
+        return AuthModel.fromJson(responseData);
       } else {
-        final body = jsonDecode(response.body);
-        throw Exception(body['message'] ?? 'Error en el inicio de sesión');
+        // Mejor manejo de errores para entender qué está fallando
+        String errorMessage = 'Error en login: ${response.statusCode}';
+        try {
+          final errorData = jsonDecode(response.body);
+          if (errorData is Map && errorData.containsKey('message')) {
+            errorMessage = 'Error en login: ${errorData['message']}';
+          }
+          
+          // Loguear errores de validación detallados si están disponibles
+          if (errorData is Map && errorData.containsKey('errors') && errorData['errors'] is List) {
+            final errors = errorData['errors'] as List;
+            for (var error in errors) {
+              if (error is Map && error.containsKey('property') && error.containsKey('constraints')) {
+                print("Error en campo ${error['property']}: ${error['constraints']}");
+              }
+            }
+          }
+        } catch (e) {
+          print("Error al parsear respuesta de error: $e");
+        }
+        
+        throw Exception(errorMessage);
       }
-    } catch (e, stackTrace) {
-      debugPrint('ERROR: ${e.toString()}, $stackTrace');
-      rethrow;
+    } catch (e) {
+      print("Excepción durante el login: $e");
+      throw Exception('Error en login: $e');
     }
   }
 
   Future<AuthModel> refreshToken({required String token}) async {
-    if (token.isEmpty) {
-      throw Exception('Token no válido');
-    }
-
-    Uri url = Uri.parse('$defaultApiServer/api/v1/usuario/validate/$token');
-
     try {
+      final url = Uri.parse('${AppConstants.serverBase}/api/v1/usuario/validate/$token');
+      
+      print("URL de refresh token: $url");
+      print("Token utilizado: $token");
+      
       final response = await http.get(
         url,
-        headers: {'Authorization': 'Bearer $token'}
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+          'x-api-key': AppConstants.apikey, // Agregando API key por si acaso
+        }
       );
 
+      print("Código de respuesta refresh: ${response.statusCode}");
+      print("Cuerpo de respuesta refresh: ${response.body}");
+
       if (response.statusCode == 200) {
-        final dataUTF8 = utf8.decode(response.bodyBytes);
-        final responseData = jsonDecode(dataUTF8);
+        final responseData = jsonDecode(response.body);
+        return AuthModel.fromJson(responseData);
+      } else {
+        // Mejor manejo de errores
+        String errorMessage = 'Error al refrescar token: ${response.statusCode}';
+        try {
+          final errorData = jsonDecode(response.body);
+          if (errorData is Map && errorData.containsKey('message')) {
+            errorMessage = 'Error al refrescar token: ${errorData['message']}';
+          }
+        } catch (_) {}
         
-        return AuthModel(
-          token: responseData['dato'],
-          // Add any other user data that comes in the response
-          uuid: responseData['uuid'],
-          correo: responseData['email'],
-        );
+        throw Exception(errorMessage);
       }
-      throw ApiExceptionCustom(response: response);
-    } catch (e, stackTrace) {
-      debugPrint('ERROR url: refreshToken $url');
-      debugPrint('ERROR: refreshToken ${e.toString()}, $stackTrace');
-      rethrow;
+    } catch (e) {
+      print("Excepción durante refresh token: $e");
+      throw Exception('Error al refrescar token: $e');
     }
   }
 }

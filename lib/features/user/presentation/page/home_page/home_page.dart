@@ -15,8 +15,7 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   final List<Widget> _pages = const [
-    ChatPage(),
-    AlarmPage(),
+   AlarmPage(),
     ChatPage(),
   ];
 
@@ -49,14 +48,9 @@ class _HomePageState extends ConsumerState<HomePage> {
             ref.read(navigationProvider.notifier).setIndex(index);
           },
           items: [
-            SalomonBottomBarItem(
-              icon: const Icon(Icons.login),
-              title: const Text("Login"),
-              selectedColor: const Color(0xFF6C63FF),
-            ),
-            SalomonBottomBarItem(
-              icon: const Icon(Icons.shield_outlined),
-              title: const Text("Alarma"),
+           SalomonBottomBarItem(
+              icon: const Icon(Icons.chat_bubble_outline),
+              title: const Text("alarma"),
               selectedColor: const Color(0xFF6C63FF),
             ),
             SalomonBottomBarItem(
